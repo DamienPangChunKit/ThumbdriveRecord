@@ -181,7 +181,7 @@
             android:id="@+id/etReturnDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2021-01-01"
+            android:text=""
             android:inputType="text"
             android:textSize="20dp"
             android:padding="15dp"

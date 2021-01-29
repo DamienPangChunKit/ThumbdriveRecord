@@ -155,6 +155,14 @@ public class edit_details extends AppCompatActivity {
             String getReturnDate = layout_returnDate.getEditText().getText().toString().trim();
             String getRemarkEmployee = layout_remark.getEditText().getText().toString().trim();
 
+            if (getReturnDate.isEmpty()){
+                getReturnDate = null;
+            }
+
+            if (getRemarkEmployee.isEmpty()){
+                getRemarkEmployee = null;
+            }
+
             Background bg = new Background();
             bg.execute(getEmployeeID, getEmployeeName, getBorrowDate, getReturnDate, getRemarkEmployee, finalID);
         }

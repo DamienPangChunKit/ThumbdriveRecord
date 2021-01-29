@@ -109,7 +109,7 @@ public class add_list extends AppCompatActivity implements AdapterView.OnItemSel
 
                 try {
                     if (simpleDateFormat.parse(returnDate).before(simpleDateFormat.parse(date))){
-                        ETFinalReturnDate.setText("");
+                        ETFinalReturnDate.setText(null);
                         layout_returnDate.setError("Remove due to borrow date selected is later than return date!");
                     }
                 } catch (ParseException e) {
@@ -143,7 +143,7 @@ public class add_list extends AppCompatActivity implements AdapterView.OnItemSel
                         ETFinalReturnDate.setText(date);
                         layout_returnDate.setError(null);
                     } else{
-                        ETFinalReturnDate.setText("");
+                        ETFinalReturnDate.setText(null);
                         layout_returnDate.setError("Return date must be later than borrow date!");
                     }
                 } catch (ParseException e) {
@@ -211,6 +211,14 @@ public class add_list extends AppCompatActivity implements AdapterView.OnItemSel
             String remarkInput = layout_remark.getEditText().getText().toString().trim();
             String driveTypeInput = mSpinner.getSelectedItem().toString().trim();
 
+            if (returnDateInput.isEmpty()){
+                returnDateInput = null;
+            }
+
+            if (remarkInput.isEmpty()){
+                remarkInput = null;
+            }
+
             Background bg = new Background(Background.INSERT_LIST);
             bg.execute(empIDInput, empNameInput, borrowDateInput, returnDateInput, remarkInput, driveTypeInput);
         }
@@ -269,7 +277,7 @@ public class add_list extends AppCompatActivity implements AdapterView.OnItemSel
                 Toast.makeText(add_list.this, "Something went wrong", Toast.LENGTH_SHORT).show();
             }
             finally {
-                progressDialog.hide();
+//                progressDialog.hide();
                 try { result.close(); } catch (Exception e) { /* ignored */ }
                 closeConn();
             }
@@ -280,7 +288,7 @@ public class add_list extends AppCompatActivity implements AdapterView.OnItemSel
             progressDialog = new ProgressDialog(add_list.this);
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.setMessage("Processing data");
-            progressDialog.show();
+//            progressDialog.show();
         }
 
         @Override
@@ -300,8 +308,7 @@ public class add_list extends AppCompatActivity implements AdapterView.OnItemSel
                         return stmt.executeQuery();
 
                     case INSERT_LIST:
-                        query = "insert into borrow_list (employee_id, employee_name, borrow_date, " +
-                                "return_date, remark, thumbdrive_type) values (?, ?, ?, ?, ?, ?)";
+                        query = "insert into borrow_list (employee_id, employee_name, borrow_date, return_date, remark, thumbdrive_type) values (?, ?, ?, ?, ?, ?)";
                         stmt = conn.prepareStatement(query);
                         stmt.setInt(1, Integer.parseInt(strings[0]));
                         stmt.setString(2, strings[1]);
