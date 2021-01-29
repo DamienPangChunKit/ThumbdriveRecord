@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login"
+    tools:context=".thumbdrive_final_details">
+
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintBottom_toBottomOf="@+id/tvThumndriveType"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvThumndriveType" />
+
+    <TextView
+        android:id="@+id/tvThumndriveType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/open_sans"
+        android:text="Type 1"
+        android:textColor="@android:color/background_light"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="100dp"
+        android:stretchColumns="2">
+
+        <TableRow>
+        <TextView
+            android:layout_column="1"
+            android:text=" ID"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:lines="2"
+            android:background="@drawable/rectangle_border"
+            android:padding="3dip" />
+        <TextView
+            android:id="@+id/tvFinalID"
+            android:text="ID "
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:gravity="right"
+            android:lines="2"
+            android:background="@drawable/rectangle_border"
+            android:padding="3dip" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text=" Employee ID"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/tvFinalEmployeeID"
+                android:text="Employee ID "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text=" Employee Name "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:lines="3"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/tvFinalEmployeeName"
+                android:layout_width="0dp"
+                android:text="Employee Name "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:lines="3"
+                android:inputType="textMultiLine"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text=" Borrow Date"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/tvFinalBorrowDate"
+                android:text="Borrow Date "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text=" Return Date"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/tvFinalReturnDate"
+                android:text="Return Date "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text=" Remark"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:lines="3"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/tvFinalRemark"
+                android:layout_width="0dp"
+                android:text="Remark "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:lines="3"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btnEditChanges"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/btn_common"
+        android:fontFamily="@font/merienda_one"
+        android:text="Edit"
+        android:onClick="btnEditDetails_onClicked"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
