@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login"
+    tools:context=".balance_final_history">
+
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintBottom_toBottomOf="@+id/tvBalanceHistoryTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvBalanceHistoryTitle" />
+
+    <TextView
+        android:id="@+id/tvBalanceHistoryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/open_sans"
+        android:text="History Details"
+        android:textColor="@android:color/background_light"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="100dp"
+        android:stretchColumns="2">
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text=" ID"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/tvBalanceHistoryID"
+                android:text="ID "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text=" Employee ID"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/tvBalanceHistoryEmployeeID"
+                android:text="Employee ID "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text=" Amount Add"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/tvBalanceHistoryAmountAdd"
+                android:text="Amount Add "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text=" Amount Deduct "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/tvBalanceHistoryAmountDeduct"
+                android:text="Amount Deduct "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text=" Remark"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:lines="4"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/tvBalanceHistoryRemark"
+                android:layout_width="0dp"
+                android:text="Remark "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:lines="4"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+        </TableRow>
+
+    </TableLayout>
+
+</android.support.constraint.ConstraintLayout>
