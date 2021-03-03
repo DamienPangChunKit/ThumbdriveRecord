@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.damien.thumbdriverecord">
+    package="com.example.damien.devicerecord">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -24,13 +24,21 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".homepage" />
-        <activity android:name=".thumbdrive" />
+        <activity android:name=".device" />
         <activity android:name=".add_list" />
         <activity android:name=".edit_profile" />
         <activity android:name=".profile" />
-        <activity android:name=".thumbdrive_details" />
-        <activity android:name=".thumbdrive_final_details" />
-        <activity android:name=".edit_details"></activity>
+        <activity android:name=".device_details" />
+        <activity android:name=".device_final_details" />
+        <activity android:name=".edit_details" />
+        <activity android:name=".manage_balance" />
+        <activity android:name=".balance_history" />
+        <activity android:name=".balance_final_history" />
+        <activity android:name=".add_list_next" />
+
+        <receiver android:name=".AlertReceiver" />
+
+        <activity android:name=".add_device"></activity>
     </application>
 
 </manifest>

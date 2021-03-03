@@ -1,4 +1,4 @@
-package com.example.damien.thumbdriverecord;
+package com.example.damien.devicerecord;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,4 +1,4 @@
-package com.example.damien.thumbdriverecord;
+package com.example.damien.devicerecord;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -7,15 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class thumbdrive_final_details extends AppCompatActivity {
+public class device_final_details extends AppCompatActivity {
     TextView TVFinalID;
     TextView TVFinalEmployeeID;
     TextView TVFinalEmployeeName;
     TextView TVFinalBorrowDate;
     TextView TVFinalReturnDate;
     TextView TVFinalRemark;
+    TextView TVDeviceName;
     ImageView backButton;
 
     private String finalID;
@@ -24,13 +24,14 @@ public class thumbdrive_final_details extends AppCompatActivity {
     private String finalBorrowDate;
     private String finalReturnDate;
     private String finalRemark;
+    private String deviceName;
 
     public static final int REQUEST_CODE4 = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_thumbdrive_final_details);
+        setContentView(R.layout.activity_device_final_details);
 
         TVFinalID = findViewById(R.id.tvFinalID);
         TVFinalEmployeeID = findViewById(R.id.tvFinalEmployeeID);
@@ -38,6 +39,7 @@ public class thumbdrive_final_details extends AppCompatActivity {
         TVFinalBorrowDate = findViewById(R.id.tvFinalBorrowDate);
         TVFinalReturnDate = findViewById(R.id.tvFinalReturnDate);
         TVFinalRemark = findViewById(R.id.tvFinalRemark);
+        TVDeviceName = findViewById(R.id.tvDeviceType);
         backButton = findViewById(R.id.btnBack);
 
         Intent i = getIntent();
@@ -47,6 +49,7 @@ public class thumbdrive_final_details extends AppCompatActivity {
         finalBorrowDate = i.getStringExtra("detailsBorrowDate");
         finalReturnDate = i.getStringExtra("detailsReturnDate");
         finalRemark = i.getStringExtra("detailsRemark");
+        deviceName = i.getStringExtra("deviceName");
 
         TVFinalID.setText(finalID);
         TVFinalEmployeeID.setText(finalEmployeeID);
@@ -54,6 +57,7 @@ public class thumbdrive_final_details extends AppCompatActivity {
         TVFinalBorrowDate.setText(finalBorrowDate);
         TVFinalReturnDate.setText(finalReturnDate);
         TVFinalRemark.setText(finalRemark);
+        TVDeviceName.setText(deviceName);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +79,7 @@ public class thumbdrive_final_details extends AppCompatActivity {
     }
 
     public void btnEditDetails_onClicked(View view) {
-        Intent i = new Intent(thumbdrive_final_details.this, edit_details.class);
+        Intent i = new Intent(device_final_details.this, edit_details.class);
         i.putExtra("finalID", finalID);
         i.putExtra("finalEmployeeID", finalEmployeeID);
         i.putExtra("finalEmployeeName", finalEmployeeName);

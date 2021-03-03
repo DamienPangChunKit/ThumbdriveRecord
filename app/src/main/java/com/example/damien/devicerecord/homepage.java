@@ -1,4 +1,4 @@
-package com.example.damien.thumbdriverecord;
+package com.example.damien.devicerecord;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -6,18 +6,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.math.BigDecimal;
 
 public class homepage extends AppCompatActivity {
     ImageView imgDrive;
     ImageView imgAddList;
+    ImageView imgPayment;
+    ImageView imgBalanceHistory;
+    TextView tvTotalBalance;
 
     private int id;
     private String username;
     private String password;
+    private float totalBalance;
 
     public static final int REQUEST_CODE1 = 1;
     public static final int REQUEST_CODE6 = 6;
+    public static final int REQUEST_CODE7 = 7;
+    public static final int REQUEST_CODE8 = 8;
+    public static final int REQUEST_CODE11 = 11;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +38,28 @@ public class homepage extends AppCompatActivity {
         id = a.getIntExtra(login.EXTRA_ID, -1);
         username = a.getStringExtra(login.EXTRA_USERNAME);
         password = a.getStringExtra(login.EXTRA_PASSWORD);
+        totalBalance = a.getFloatExtra(login.EXTRA_BALANCE, 1);
 
         imgDrive = findViewById(R.id.imgDrive);
         imgAddList = findViewById(R.id.imgEmployee);
+        imgPayment = findViewById(R.id.imgPayment);
+        imgBalanceHistory = findViewById(R.id.imgHistory);
+        tvTotalBalance = findViewById(R.id.tvTotalBalance);
+
+        BigDecimal bigDecimal = new BigDecimal(totalBalance);
+        bigDecimal = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP);
+
+        if (totalBalance == 0){
+            tvTotalBalance.setText("RM 0.00");
+        } else {
+            tvTotalBalance.setText("RM " + bigDecimal);
+        }
 
         imgDrive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(homepage.this, thumbdrive.class);
-                startActivity(i);
+                Intent i = new Intent(homepage.this, device.class);
+                startActivityForResult(i, REQUEST_CODE11);
             }
         });
 
@@ -45,6 +68,25 @@ public class homepage extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(homepage.this, add_list.class);
                 startActivityForResult(i, REQUEST_CODE6);
+            }
+        });
+
+        imgPayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(homepage.this, manage_balance.class);
+                i.putExtra(login.EXTRA_ID, id);
+                i.putExtra(login.EXTRA_BALANCE, totalBalance);
+                startActivityForResult(i, REQUEST_CODE7);
+            }
+        });
+
+        imgBalanceHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(homepage.this, balance_history.class);
+                i.putExtra(login.EXTRA_ID, id);
+                startActivityForResult(i, REQUEST_CODE8);
             }
         });
     }
@@ -63,6 +105,28 @@ public class homepage extends AppCompatActivity {
         if (requestCode == REQUEST_CODE6){
             if (resultCode == RESULT_OK){
                 Toast.makeText(this, "Add list successfully!", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (requestCode == REQUEST_CODE7){
+            if (resultCode == RESULT_OK){
+                totalBalance = data.getFloatExtra("TOTAL_BALANCE_AFTER_PAID", 0);
+                BigDecimal bigDecimals = new BigDecimal(totalBalance);
+                bigDecimals = bigDecimals.setScale(2, BigDecimal.ROUND_HALF_UP);
+
+                if (totalBalance == 0){
+                    tvTotalBalance.setText("RM 0.00");
+                } else {
+                    tvTotalBalance.setText("RM " + bigDecimals);
+                }
+
+                Toast.makeText(this, "Manage Balance successfully!", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (requestCode == REQUEST_CODE11){
+            if (resultCode == RESULT_OK){
+                Toast.makeText(this, "Add device successfully!", Toast.LENGTH_SHORT).show();
             }
         }
     }

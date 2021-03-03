@@ -1,6 +1,5 @@
-package com.example.damien.thumbdriverecord;
+package com.example.damien.devicerecord;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.StrictMode;
@@ -14,10 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,27 +24,35 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
 
-public class thumbdrive extends AppCompatActivity {
-    RecyclerView thumbdriveRecyclerView;
-    ThumbdriveListAdapter mThumbdriveListAdapter;
+public class device_details extends AppCompatActivity {
+    RecyclerView deviceDetailsRV;
+    deviceDetailsAdapter mAdapter;
 
+    TextView tvDeviceType;
     ImageView backButton;
+    TableLayout mTableLayout;
 
-    public static final int REQUEST_CODE5 = 5;
+    private int deviceID;
+    private String device;
+    private String deviceName;
+
+    public static final int REQUEST_CODE3 = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_thumbdrive);
+        setContentView(R.layout.activity_device_details);
 
-        thumbdriveRecyclerView = findViewById(R.id.thumbdriveRecycler);
         backButton = findViewById(R.id.btnBack);
+        tvDeviceType = findViewById(R.id.tvDeviceType);
+        mTableLayout = findViewById(R.id.layout_table);
 
-        Background bg = new Background(Background.FETCH_THUMBDRIVE_LIST);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        thumbdriveRecyclerView.setLayoutManager(layoutManager);
-        mThumbdriveListAdapter = new ThumbdriveListAdapter(bg);
-        thumbdriveRecyclerView.setAdapter(mThumbdriveListAdapter);
+        Intent i = getIntent();
+        deviceID = i.getIntExtra("deviceID", -1);
+        device = i.getStringExtra("device");
+        deviceName = i.getStringExtra("deviceName");
+
+        tvDeviceType.setText(deviceName);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,14 +60,21 @@ public class thumbdrive extends AppCompatActivity {
                 finish();
             }
         });
+
+        Background bg = new Background(Background.FETCH_DETAILS);
+        deviceDetailsRV = (RecyclerView) findViewById(R.id.deviceDetailsRecycler);
+        mAdapter = new deviceDetailsAdapter(bg);
+        deviceDetailsRV.setAdapter(mAdapter);
+        deviceDetailsRV.setLayoutManager(new LinearLayoutManager(device_details.this));
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE5){
+        if (requestCode == REQUEST_CODE3){
             if (resultCode == RESULT_OK){
-                Toast.makeText(this, "Edit successfully!", Toast.LENGTH_SHORT).show();
+                setResult(RESULT_OK, data);
+                finish();
             }
         }
     }
@@ -75,36 +88,14 @@ public class thumbdrive extends AppCompatActivity {
 
         private Connection conn;
         private PreparedStatement stmt;
-        private ProgressDialog progressDialog;
         private int method;
 
-        public static final int FETCH_THUMBDRIVE_LIST = 1;
+        public static final int FETCH_DETAILS = 1;
 
         public Background(int method) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
             this.method = method;
-        }
-
-        @Override
-        protected void onPostExecute(ResultSet result) {
-            super.onPostExecute(result);
-
-            try {
-
-            }
-            catch (Exception e) {
-                Log.e("ERROR BACKGROUND", e.getMessage());
-                Toast.makeText(thumbdrive.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(thumbdrive.this);
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.setMessage("Processing data");
         }
 
         @Override
@@ -116,12 +107,13 @@ public class thumbdrive extends AppCompatActivity {
                 return null;
             }
             try {
-                String query = "";
-
-                switch(this.method){
-                    case FETCH_THUMBDRIVE_LIST:
-                        query = "SELECT id, name, remark FROM thumbdrive_type";
+                String query;
+                switch(method){
+                    case FETCH_DETAILS:
+                        query = "SELECT id, employee_id, employee_name, borrow_date, return_date, remark FROM borrow_list WHERE (device_type = ? AND device = ?)";
                         stmt = conn.prepareStatement(query);
+                        stmt.setString(1, deviceName);
+                        stmt.setString(2, device);
                         result = stmt.executeQuery();
                         return result;
                 }
@@ -129,7 +121,7 @@ public class thumbdrive extends AppCompatActivity {
             catch (Exception e) {
                 Log.e("ERROR MySQL Statement", e.getMessage());
             }
-            return result;
+            return null;
         }
 
         private Connection connectDB() {
@@ -149,32 +141,33 @@ public class thumbdrive extends AppCompatActivity {
         }
     }
 
-    private class ThumbdriveListAdapter extends RecyclerView.Adapter<ThumbdriveListAdapter.ThumbdriveViewHolder> {
+    private class deviceDetailsAdapter extends RecyclerView.Adapter<deviceDetailsAdapter.deviceDetailsHolder>{
         private LayoutInflater mInflater;
         private int itemCount;
         private Background bg;
         private ResultSet result;
 
-        public ThumbdriveListAdapter(Background bg) {
+
+        public deviceDetailsAdapter(Background bg){
             this.bg = bg;
             updateResultSet();
-            mInflater = LayoutInflater.from(thumbdrive.this);
+            mInflater = LayoutInflater.from(device_details.this);
         }
 
-        class ThumbdriveViewHolder extends RecyclerView.ViewHolder{
-            TextView tvThumbdriveName;
-            TextView tvRemark;
-            ImageView imgThumbdrive;
-            ImageView imgViewThumbdrive;
+        class deviceDetailsHolder extends RecyclerView.ViewHolder{
+            TextView tvDeviceDetailsID;
+            TextView tvDeviceDetailsName;
+            TextView tvDeviceDetailsDate;
+            TableLayout mTableLayout;
 
-            final ThumbdriveListAdapter mAdapter;
+            final deviceDetailsAdapter mAdapter;
 
-            public ThumbdriveViewHolder(@NonNull View itemView, ThumbdriveListAdapter adapter){
+            public deviceDetailsHolder(@NonNull View itemView, deviceDetailsAdapter adapter){
                 super(itemView);
-                tvThumbdriveName = itemView.findViewById(R.id.tvThumbdriveName);
-                tvRemark = itemView.findViewById(R.id.tvThumbdriveRemark);
-                imgThumbdrive = itemView.findViewById(R.id.imgThumbdriveItems);
-                imgViewThumbdrive = itemView.findViewById(R.id.imgViewThumbdrive);
+                tvDeviceDetailsID = (TextView) itemView.findViewById(R.id.tvDeviceDetailsID);
+                tvDeviceDetailsName = (TextView) itemView.findViewById(R.id.tvDeviceDetailsEmployeeName);
+                tvDeviceDetailsDate = (TextView) itemView.findViewById(R.id.tvDeviceDetailsDate);
+                mTableLayout = (TableLayout) itemView.findViewById(R.id.device_details_layout_table);
 
                 this.mAdapter = adapter;
             }
@@ -182,48 +175,48 @@ public class thumbdrive extends AppCompatActivity {
 
         @NonNull
         @Override
-        public ThumbdriveViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-            View view = mInflater.inflate(R.layout.thumbdrive_list, parent, false);
-            return new ThumbdriveViewHolder(view, this);
+        public deviceDetailsHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            View mItemView = mInflater.inflate(R.layout.device_details_row, viewGroup, false);
+            return new deviceDetailsHolder(mItemView, this);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ThumbdriveViewHolder thumbdriveViewHolder, final int position) {
+        public void onBindViewHolder(@NonNull deviceDetailsHolder deviceDetailsHolder, int position) {
             try {
                 result.first();
                 for (int i = 0; i < position; i++) {
                     result.next();
                 }
 
-                final int thumbdriveID = result.getInt(1);
-                final String thumbdriveName = result.getString(2);
-                final String thumbdriveRemark = result.getString(3);
+//                if (result.next()){
+//                    mTableLayout.setVisibility(View.INVISIBLE);
+//                }
 
-                thumbdriveViewHolder.tvThumbdriveName.setText(thumbdriveName);
-                thumbdriveViewHolder.tvRemark.setText(thumbdriveRemark);
-                thumbdriveViewHolder.imgViewThumbdrive.setOnClickListener(new View.OnClickListener() {
+                final String detailsID = result.getString(1);
+                final String detailsEmployeeID = result.getString(2);
+                final String detailsEmployeeName = result.getString(3);
+                final String detailsBorrowDate = result.getString(4);
+                final String detailsReturnDate = result.getString(5);
+                final String detailsRemark = result.getString(6);
+
+                deviceDetailsHolder.tvDeviceDetailsID.setText(detailsID);
+                deviceDetailsHolder.tvDeviceDetailsName.setText(detailsEmployeeName);
+                deviceDetailsHolder.tvDeviceDetailsDate.setText(detailsBorrowDate);
+
+                deviceDetailsHolder.mTableLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(thumbdrive.this, thumbdrive_details.class);
-                        i.putExtra("thumbdriveID", thumbdriveID);
-                        i.putExtra("thumbdriveName", thumbdriveName);
-                        startActivityForResult(i, REQUEST_CODE5);
+                        Intent i = new Intent(device_details.this, device_final_details.class);
+                        i.putExtra("detailsID", detailsID);
+                        i.putExtra("detailsEmployeeID", detailsEmployeeID);
+                        i.putExtra("detailsEmployeeName", detailsEmployeeName);
+                        i.putExtra("detailsBorrowDate", detailsBorrowDate);
+                        i.putExtra("detailsReturnDate", detailsReturnDate);
+                        i.putExtra("detailsRemark", detailsRemark);
+                        i.putExtra("deviceName", deviceName);
+                        startActivityForResult(i, REQUEST_CODE3);
                     }
                 });
-
-                switch (thumbdriveID){
-                    case 1: thumbdriveViewHolder.imgThumbdrive.setImageResource(R.drawable.blackdrive);
-                        break;
-                    case 2: thumbdriveViewHolder.imgThumbdrive.setImageResource(R.drawable.reddrive);
-                        break;
-                    case 3: thumbdriveViewHolder.imgThumbdrive.setImageResource(R.drawable.whitedrive);
-                        break;
-                    case 4: thumbdriveViewHolder.imgThumbdrive.setImageResource(R.drawable.yellowdrive);
-                        break;
-                    case 5: thumbdriveViewHolder.imgThumbdrive.setImageResource(R.drawable.greendrive);
-                        break;
-                }
-
             }
             catch (SQLException e) {
                 Log.d("ERROR BIND VIEW", e.getMessage());
@@ -237,6 +230,7 @@ public class thumbdrive extends AppCompatActivity {
 
         private int getResultCount() {
             try {
+                result.next();
                 result.last();
                 int count = result.getRow();
                 result.first();
@@ -250,7 +244,7 @@ public class thumbdrive extends AppCompatActivity {
         public void updateResultSet() {
             try {
                 bg.closeConn();
-                bg = new Background(Background.FETCH_THUMBDRIVE_LIST);
+                bg = new Background(Background.FETCH_DETAILS);
                 this.result = this.bg.execute().get();
                 itemCount = getResultCount();
             } catch (ExecutionException e) {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login"
-    tools:context=".thumbdrive_final_details">
+    tools:context=".device_final_details">
 
     <ImageView
         android:id="@+id/btnBack"
@@ -15,12 +15,12 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/ic_arrow_back"
-        app:layout_constraintBottom_toBottomOf="@+id/tvThumndriveType"
+        app:layout_constraintBottom_toBottomOf="@+id/tvDeviceType"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvThumndriveType" />
+        app:layout_constraintTop_toTopOf="@+id/tvDeviceType" />
 
     <TextView
-        android:id="@+id/tvThumndriveType"
+        android:id="@+id/tvDeviceType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"

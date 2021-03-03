@@ -1,4 +1,4 @@
-package com.example.damien.thumbdriverecord;
+package com.example.damien.devicerecord;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,9 +17,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class login extends AppCompatActivity {
-    public static final String EXTRA_ID = "com.example.damien.onlinegrocerystore.ID";
-    public static final String EXTRA_USERNAME = "com.example.damien.onlinegrocerystore.USERNAME";
-    public static final String EXTRA_PASSWORD = "com.example.damien.onlinegrocerystore.PASSWORD";
+    public static final String EXTRA_ID = "com.example.damien.thumbdriverecord.ID";
+    public static final String EXTRA_USERNAME = "com.example.damien.thumbdriverecord.USERNAME";
+    public static final String EXTRA_PASSWORD = "com.example.damien.thumbdriverecord.PASSWORD";
+    public static final String EXTRA_BALANCE = "com.example.damien.thumbdriverecord.BALANCE";
 
     private TextInputLayout textInputUsername;
     private TextInputLayout textInputPassword;
@@ -105,6 +106,7 @@ public class login extends AppCompatActivity {
                     i.putExtra(EXTRA_ID, result.getInt(1));
                     i.putExtra(EXTRA_USERNAME, result.getString(2));
                     i.putExtra(EXTRA_PASSWORD, result.getString(3));
+                    i.putExtra(EXTRA_BALANCE, result.getFloat(4));
                     startActivity(i);
                 }
                 else {
@@ -139,7 +141,7 @@ public class login extends AppCompatActivity {
                 return null;
             }
             try {
-                String query = "SELECT id, username, password FROM account WHERE username LIKE ? AND password=?";
+                String query = "SELECT id, username, password, balance FROM account WHERE username LIKE ? AND password=?";
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1, strings[0]);
                 stmt.setString(2, strings[1]);

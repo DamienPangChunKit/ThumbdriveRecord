@@ -12,21 +12,21 @@
     android:layout_height="90dp">
 
     <TextView
-        android:id="@+id/tvThumbdriveName"
+        android:id="@+id/tvDeviceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/open_sans"
-        android:text="thumbdrive_name"
+        android:text="device_name"
         android:textColor="@android:color/black"
         android:textSize="18dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imgThumbdriveItems"
-        app:layout_constraintTop_toTopOf="@+id/imgThumbdriveItems" />
+        app:layout_constraintStart_toEndOf="@+id/imgDeviceItems"
+        app:layout_constraintTop_toTopOf="@+id/imgDeviceItems" />
 
     <ImageView
-        android:id="@+id/imgThumbdriveItems"
+        android:id="@+id/imgDeviceItems"
         android:layout_width="90dp"
         android:layout_height="70dp"
         android:layout_marginBottom="8dp"
@@ -39,7 +39,7 @@
         app:srcCompat="@drawable/blackdrive" />
 
     <TextView
-        android:id="@+id/tvThumbdriveRemark"
+        android:id="@+id/tvDeviceRemark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -62,18 +62,28 @@
         android:textColor="@android:color/black"
         android:textSize="15dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imgThumbdriveItems"
-        app:layout_constraintStart_toEndOf="@+id/imgThumbdriveItems"
-        app:layout_constraintTop_toTopOf="@+id/imgThumbdriveItems" />
+        app:layout_constraintBottom_toBottomOf="@+id/imgDeviceItems"
+        app:layout_constraintStart_toEndOf="@+id/imgDeviceItems"
+        app:layout_constraintTop_toTopOf="@+id/imgDeviceItems" />
 
     <ImageView
-        android:id="@+id/imgViewThumbdrive"
+        android:id="@+id/imgViewDevice"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginEnd="8dp"
         android:src="@drawable/ic_view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvThumbdriveRemark" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDeviceRemark" />
+
+    <ImageView
+        android:id="@+id/imgDeleteDevice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvDeviceName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvDeviceName"
+        app:srcCompat="@drawable/ic_delete" />
 
 </android.support.constraint.ConstraintLayout>

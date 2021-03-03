@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/thumbdriveDetails_table_layout"
+    android:id="@+id/deviceDetails_table_layout"
     android:layout_width="match_parent"
     android:layout_marginStart="24dp"
     android:layout_marginEnd="24dp"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <TableLayout
-            android:id="@+id/thumbdrive_details_layout_table"
+            android:id="@+id/device_details_layout_table"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:stretchColumns="1">
@@ -20,7 +20,7 @@
             <TableRow>
 
                 <TextView
-                    android:id="@+id/tvthumbdriveDetailsID"
+                    android:id="@+id/tvDeviceDetailsID"
                     android:layout_width="60dp"
                     android:lines="2"
                     android:background="@drawable/rectangle_border"
@@ -30,7 +30,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvthumbdriveDetailsEmployeeName"
+                    android:id="@+id/tvDeviceDetailsEmployeeName"
                     android:layout_width="0dp"
                     android:lines="2"
                     android:background="@drawable/rectangle_border"
@@ -40,7 +40,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvthumbdriveDetailsDate"
+                    android:id="@+id/tvDeviceDetailsDate"
                     android:layout_width="115dp"
                     android:lines="2"
                     android:background="@drawable/rectangle_border"
