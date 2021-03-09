@@ -128,6 +128,10 @@ public class homepage extends AppCompatActivity {
             if (resultCode == RESULT_OK){
                 Toast.makeText(this, "Add device successfully!", Toast.LENGTH_SHORT).show();
             }
+
+            if (resultCode == 9999){
+                Toast.makeText(this, "Delete device successfully!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

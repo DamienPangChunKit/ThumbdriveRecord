@@ -52,7 +52,7 @@
         android:id="@+id/textInputRemark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="100dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="100dp"
         app:errorEnabled="true"
@@ -72,6 +72,15 @@
             android:textColorHint="#FFFFFF" />
 
     </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnScan"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/scan_barcode_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/textInputRemark"
+        app:layout_constraintStart_toEndOf="@+id/textInputRemark"
+        app:layout_constraintTop_toTopOf="@+id/textInputRemark" />
 
     <TextView
         android:id="@+id/textView7"
@@ -105,6 +114,41 @@
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF">
         </Spinner>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:text="Approver"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textInputApprover"
+        app:layout_constraintTop_toBottomOf="@+id/textInputDeviceType" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputApprover"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputDeviceType">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/etApprover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="20dp"
+            android:padding="13dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"/>
 
     </android.support.design.widget.TextInputLayout>
 

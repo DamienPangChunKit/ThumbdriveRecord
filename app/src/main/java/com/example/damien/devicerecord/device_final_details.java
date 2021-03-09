@@ -16,6 +16,7 @@ public class device_final_details extends AppCompatActivity {
     TextView TVFinalReturnDate;
     TextView TVFinalRemark;
     TextView TVDeviceName;
+    TextView TVFinalApprover;
     ImageView backButton;
 
     private String finalID;
@@ -25,6 +26,7 @@ public class device_final_details extends AppCompatActivity {
     private String finalReturnDate;
     private String finalRemark;
     private String deviceName;
+    private String finalApprover;
 
     public static final int REQUEST_CODE4 = 4;
 
@@ -40,6 +42,7 @@ public class device_final_details extends AppCompatActivity {
         TVFinalReturnDate = findViewById(R.id.tvFinalReturnDate);
         TVFinalRemark = findViewById(R.id.tvFinalRemark);
         TVDeviceName = findViewById(R.id.tvDeviceType);
+        TVFinalApprover = findViewById(R.id.tvFinalApprover);
         backButton = findViewById(R.id.btnBack);
 
         Intent i = getIntent();
@@ -49,6 +52,7 @@ public class device_final_details extends AppCompatActivity {
         finalBorrowDate = i.getStringExtra("detailsBorrowDate");
         finalReturnDate = i.getStringExtra("detailsReturnDate");
         finalRemark = i.getStringExtra("detailsRemark");
+        finalApprover = i.getStringExtra("detailsApprover");
         deviceName = i.getStringExtra("deviceName");
 
         TVFinalID.setText(finalID);
@@ -57,6 +61,7 @@ public class device_final_details extends AppCompatActivity {
         TVFinalBorrowDate.setText(finalBorrowDate);
         TVFinalReturnDate.setText(finalReturnDate);
         TVFinalRemark.setText(finalRemark);
+        TVFinalApprover.setText(finalApprover);
         TVDeviceName.setText(deviceName);
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +91,7 @@ public class device_final_details extends AppCompatActivity {
         i.putExtra("finalBorrowDate", finalBorrowDate);
         i.putExtra("finalReturnDate", finalReturnDate);
         i.putExtra("finalRemark", finalRemark);
+        i.putExtra("finalApprover", finalApprover);
         startActivityForResult(i, REQUEST_CODE4);
     }
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
 // no need care because of failed
+//
 public class AlertReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {

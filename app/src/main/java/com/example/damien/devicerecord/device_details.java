@@ -110,7 +110,7 @@ public class device_details extends AppCompatActivity {
                 String query;
                 switch(method){
                     case FETCH_DETAILS:
-                        query = "SELECT id, employee_id, employee_name, borrow_date, return_date, remark FROM borrow_list WHERE (device_type = ? AND device = ?)";
+                        query = "SELECT id, employee_id, employee_name, borrow_date, return_date, remark, approver FROM borrow_list WHERE (device_type = ? AND device = ?)";
                         stmt = conn.prepareStatement(query);
                         stmt.setString(1, deviceName);
                         stmt.setString(2, device);
@@ -198,6 +198,7 @@ public class device_details extends AppCompatActivity {
                 final String detailsBorrowDate = result.getString(4);
                 final String detailsReturnDate = result.getString(5);
                 final String detailsRemark = result.getString(6);
+                final String detailsApprover = result.getString(7);
 
                 deviceDetailsHolder.tvDeviceDetailsID.setText(detailsID);
                 deviceDetailsHolder.tvDeviceDetailsName.setText(detailsEmployeeName);
@@ -214,6 +215,7 @@ public class device_details extends AppCompatActivity {
                         i.putExtra("detailsReturnDate", detailsReturnDate);
                         i.putExtra("detailsRemark", detailsRemark);
                         i.putExtra("deviceName", deviceName);
+                        i.putExtra("detailsApprover", detailsApprover);
                         startActivityForResult(i, REQUEST_CODE3);
                     }
                 });

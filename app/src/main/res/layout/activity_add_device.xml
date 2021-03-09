@@ -39,7 +39,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="@font/open_sans"
         android:text="Device"
         android:textColor="#FFFFFF"
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="50dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +76,6 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:fontFamily="@font/open_sans"
         android:text="Device Name / Model"
         android:textColor="#FFFFFF"
@@ -89,7 +88,6 @@
         android:id="@+id/textInputDeviceName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
         android:layout_marginStart="50dp"
         app:errorEnabled="true"
@@ -114,7 +112,6 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:fontFamily="@font/open_sans"
         android:text="Remark"
         android:textColor="#FFFFFF"
@@ -127,7 +124,6 @@
         android:id="@+id/textInputDeviceRemark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
         android:layout_marginStart="50dp"
         app:errorEnabled="true"
@@ -148,6 +144,54 @@
 
     </android.support.design.widget.TextInputLayout>
 
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:text="Image"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textInputDeviceRemark"
+        app:layout_constraintTop_toBottomOf="@+id/textInputDeviceRemark" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="185dp"
+        android:layout_height="185dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddDevice"
+        app:layout_constraintEnd_toEndOf="@+id/imageFromGallery"
+        app:layout_constraintStart_toStartOf="@+id/imageFromGallery"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:srcCompat="@android:color/background_dark" />
+
+    <ImageView
+        android:id="@+id/imageFromGallery"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddDevice"
+        app:layout_constraintStart_toStartOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:srcCompat="@drawable/ic_image" />
+
+    <Button
+        android:id="@+id/btnChooseImage"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/btn_common"
+        android:text="  Choose Image  "
+        app:layout_constraintBottom_toBottomOf="@+id/textView5"
+        app:layout_constraintEnd_toEndOf="@+id/textInputDeviceRemark"
+        app:layout_constraintTop_toTopOf="@+id/textView5" />
+
     <Button
         android:id="@+id/btnAddDevice"
         android:layout_width="wrap_content"
@@ -158,5 +202,20 @@
         android:background="@drawable/btn_common"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvImageURI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="invisible"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
 </android.support.constraint.ConstraintLayout>

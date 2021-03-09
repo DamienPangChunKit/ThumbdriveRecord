@@ -14,11 +14,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,7 +32,10 @@ import java.util.Calendar;
 public class add_list_next extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     TextInputLayout layout_remark;
     TextInputLayout layout_type;
+    TextInputLayout layout_approver;
+    EditText ETRemark;
     ImageView backButton;
+    Button btnScan;
     Spinner mSpinner;
 
     private String employeeID;
@@ -47,7 +53,10 @@ public class add_list_next extends AppCompatActivity implements AdapterView.OnIt
 
         layout_remark = findViewById(R.id.textInputRemark);
         layout_type = findViewById(R.id.textInputDeviceType);
+        layout_approver = findViewById(R.id.textInputApprover);
+        ETRemark = findViewById(R.id.etRemark);
         backButton = findViewById(R.id.btnBack);
+        btnScan = findViewById(R.id.btnScan);
         mSpinner = findViewById(R.id.spinnerDeviceType);
 
         Intent i = getIntent();
@@ -66,12 +75,28 @@ public class add_list_next extends AppCompatActivity implements AdapterView.OnIt
                 finish();
             }
         });
+
+        btnScan.setOnClickListener(this);
     }
 
     public void onClick(View v){
         if(v.getId()==R.id.btnScan){
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanningResult != null) {
+            String scanEmpID = scanningResult.getContents();
+            //String scanEmpName = scanningResult.getFormatName();
+            ETRemark.setText("" + scanEmpID);
+            //ETRemark.setText("" + scanEmpName);
+        }
+        else{
+            ETRemark.setText("");
+//            Toast.makeText(this, "No scan data received!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -88,13 +113,18 @@ public class add_list_next extends AppCompatActivity implements AdapterView.OnIt
     public void btnAddList_onClicked(View view) {
         String remarkInput = layout_remark.getEditText().getText().toString().trim();
         String deviceTypeInput = mSpinner.getSelectedItem().toString().trim();
+        String approverInput = layout_approver.getEditText().getText().toString().trim();
 
         if (remarkInput.isEmpty()){
             remarkInput = null;
         }
 
+        if (approverInput.isEmpty()){
+            approverInput = null;
+        }
+
         Background bg = new Background(Background.INSERT_LIST);
-        bg.execute(employeeID, employeeName, borrowDate, returnDate, remarkInput, deviceTypeInput, device);
+        bg.execute(employeeID, employeeName, borrowDate, returnDate, remarkInput, deviceTypeInput, device, approverInput);
     }
 
     public class Background extends AsyncTask<String, Void, ResultSet> {
@@ -182,15 +212,16 @@ public class add_list_next extends AppCompatActivity implements AdapterView.OnIt
                         return stmt.executeQuery();
 
                     case INSERT_LIST:
-                        query = "insert into borrow_list (employee_id, employee_name, borrow_date, return_date, remark, device_type, device) values (?, ?, ?, ?, ?, ?, ?)";
+                        query = "insert into borrow_list (employee_id, employee_name, borrow_date, return_date, remark, device_type, device, approver) values (?, ?, ?, ?, ?, ?, ?, ?)";
                         stmt = conn.prepareStatement(query);
-                        stmt.setInt(1, Integer.parseInt(strings[0]));
+                        stmt.setString(1, strings[0]);
                         stmt.setString(2, strings[1]);
                         stmt.setString(3, strings[2]);
                         stmt.setString(4, strings[3]);
                         stmt.setString(5, strings[4]);
                         stmt.setString(6, strings[5]);
                         stmt.setString(7, strings[6]);
+                        stmt.setString(8, strings[7]);
                         stmt.executeUpdate();
 
 //                        String[] splitDate = strings[2].split("-");

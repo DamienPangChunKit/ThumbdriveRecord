@@ -80,7 +80,7 @@ public class manage_balance extends AppCompatActivity implements View.OnClickLis
         }
         else{
             ETFinalEmployeeID.setText("");
-            Toast.makeText(this, "No scan data received!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "No scan data received!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -254,14 +254,14 @@ public class manage_balance extends AppCompatActivity implements View.OnClickLis
                 if (strings[1] == null){
                     String query = "INSERT into balance_history (employee_id, amount_deduct, remark, account_id) values (?, ?, ?, ?)";
                     stmt = conn.prepareStatement(query);
-                    stmt.setInt(1, Integer.parseInt(strings[0]));
+                    stmt.setString(1, strings[0]);
                     stmt.setFloat(2, Float.parseFloat(strings[2]));
                     stmt.setString(3, strings[3]);
                     stmt.setInt(4, id);
                 } else {
                     String query = "INSERT into balance_history (employee_id, amount_add, remark, account_id) values (?, ?, ?, ?)";
                     stmt = conn.prepareStatement(query);
-                    stmt.setInt(1, Integer.parseInt(strings[0]));
+                    stmt.setString(1, strings[0]);
                     stmt.setFloat(2, Float.parseFloat(strings[1]));
                     stmt.setString(3, strings[3]);
                     stmt.setInt(4, id);

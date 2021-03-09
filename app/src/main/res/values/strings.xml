@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Record List</string>
+    <string name="app_name">Device Record</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="username_exists">Username has been used!</string>

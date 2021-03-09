@@ -119,12 +119,14 @@ public class add_list extends AppCompatActivity implements AdapterView.OnItemSel
         
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {
-            String scanContent = scanningResult.getContents();
-            ETFinalEmployeeID.setText("" + scanContent);
+            String scanEmpID = scanningResult.getContents();
+            //String scanEmpName = scanningResult.getFormatName();
+            ETFinalEmployeeID.setText("" + scanEmpID);
+            //ETFinalReturnDate.setText("" + scanEmpName);
         }
         else{
             ETFinalEmployeeID.setText("");
-            Toast.makeText(this, "No scan data received!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "No scan data received!", Toast.LENGTH_SHORT).show();
         }
     }
 

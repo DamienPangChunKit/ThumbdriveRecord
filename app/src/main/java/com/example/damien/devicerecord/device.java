@@ -1,13 +1,19 @@
 package com.example.damien.devicerecord;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,9 +39,12 @@ public class device extends AppCompatActivity {
 
     ImageView backButton;
     ImageView btnAdd;
+    ImageView btnDeleteDevice;
 
     public static final int REQUEST_CODE5 = 5;
     public static final int REQUEST_CODE10 = 10;
+    public static final int REQUEST_CODE12 = 12;
+    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +54,7 @@ public class device extends AppCompatActivity {
         deviceRecyclerView = findViewById(R.id.deviceRecycler);
         backButton = findViewById(R.id.btnBack);
         btnAdd = findViewById(R.id.btnAdd);
+        btnDeleteDevice = findViewById(R.id.btnDeleteDevice);
 
         Background bg = new Background(Background.FETCH_DEVICE_LIST);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -66,6 +76,14 @@ public class device extends AppCompatActivity {
                 startActivityForResult(i, REQUEST_CODE10);
             }
         });
+
+        btnDeleteDevice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(device.this, delete_device.class);
+                startActivityForResult(i, REQUEST_CODE12);
+            }
+        });
     }
 
     @Override
@@ -80,6 +98,13 @@ public class device extends AppCompatActivity {
         if (requestCode == REQUEST_CODE10){
             if (resultCode == RESULT_OK){
                 setResult(RESULT_OK, data);
+                finish();
+            }
+        }
+
+        if (requestCode == REQUEST_CODE12){
+            if (resultCode == 99999){
+                setResult(9999, data);
                 finish();
             }
         }
@@ -140,7 +165,7 @@ public class device extends AppCompatActivity {
 
                 switch(this.method){
                     case FETCH_DEVICE_LIST:
-                        query = "SELECT id, device, name, remark FROM device_type";
+                        query = "SELECT id, device, name, remark, image_uri FROM device_type";
                         stmt = conn.prepareStatement(query);
                         result = stmt.executeQuery();
                         return result;
@@ -227,6 +252,7 @@ public class device extends AppCompatActivity {
                 final String device = result.getString(2);
                 final String deviceName = result.getString(3);
                 final String deviceRemark = result.getString(4);
+                final String deviceImageURI = result.getString(5);
 
                 deviceViewHolder.tvDeviceName.setText(deviceName);
                 deviceViewHolder.tvRemark.setText(deviceRemark);
@@ -279,6 +305,28 @@ public class device extends AppCompatActivity {
                     }
                 });
 
+                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+                    // Should we show an explanation?
+                    if (shouldShowRequestPermissionRationale(
+                            Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        // Explain to the user why we need to read the contacts
+                    }
+
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+
+                    // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
+                    // app-defined int constant that should be quite unique
+
+                    return;
+                }
+
+                if (deviceImageURI != null){
+                    deviceViewHolder.imgDevice.setImageURI(Uri.parse(deviceImageURI));
+                }
+
                 switch (deviceID){
                     case 1: deviceViewHolder.imgDevice.setImageResource(R.drawable.blackdrive);
                         break;
@@ -325,6 +373,8 @@ public class device extends AppCompatActivity {
                     case 22: deviceViewHolder.imgDevice.setImageResource(R.drawable.harddisk2);
                         break;
                     case 23: deviceViewHolder.imgDevice.setImageResource(R.drawable.motherboard1);
+                        break;
+                    case 25: deviceViewHolder.imgDevice.setImageResource(R.drawable.samsumg1);
                         break;
                 }
 

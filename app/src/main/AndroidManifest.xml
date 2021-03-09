@@ -3,6 +3,7 @@
     package="com.example.damien.devicerecord">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".login">
+        <activity
+            android:name=".login"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,22 +26,51 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".homepage" />
-        <activity android:name=".device" />
-        <activity android:name=".add_list" />
-        <activity android:name=".edit_profile" />
-        <activity android:name=".profile" />
-        <activity android:name=".device_details" />
-        <activity android:name=".device_final_details" />
-        <activity android:name=".edit_details" />
-        <activity android:name=".manage_balance" />
-        <activity android:name=".balance_history" />
-        <activity android:name=".balance_final_history" />
-        <activity android:name=".add_list_next" />
+        <activity
+            android:name=".homepage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".device"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".add_list"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".edit_profile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".profile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".device_details"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".device_final_details"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".edit_details"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".manage_balance"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".balance_history"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".balance_final_history"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".add_list_next"
+            android:screenOrientation="portrait" />
 
-        <receiver android:name=".AlertReceiver" />
+        <receiver
+            android:name=".AlertReceiver"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".add_device"></activity>
+        <activity
+            android:name=".add_device"
+            android:screenOrientation="portrait" />
+        <activity android:name=".delete_device"></activity>
     </application>
 
 </manifest>

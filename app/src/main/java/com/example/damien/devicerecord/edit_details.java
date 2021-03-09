@@ -34,11 +34,13 @@ public class edit_details extends AppCompatActivity implements View.OnClickListe
     TextInputLayout layout_borrowDate;
     TextInputLayout layout_returnDate;
     TextInputLayout layout_remark;
+    TextInputLayout layout_approver;
     EditText ETFinalEmployeeID;
     EditText ETFinalEmployeeName;
     EditText ETFinalBorrowDate;
     EditText ETFinalReturnDate;
     EditText ETFinalRemark;
+    EditText ETFinalApprover;
     ImageView backButton;
     Button btnScan;
 
@@ -48,6 +50,7 @@ public class edit_details extends AppCompatActivity implements View.OnClickListe
     private String finalBorrowDate;
     private String finalReturnDate;
     private String finalRemark;
+    private String finalApprover;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +62,13 @@ public class edit_details extends AppCompatActivity implements View.OnClickListe
         layout_borrowDate = findViewById(R.id.textInputBorrowDate);
         layout_returnDate = findViewById(R.id.textInputReturnDate);
         layout_remark = findViewById(R.id.textInputRemark);
+        layout_approver = findViewById(R.id.textInputApprover);
         ETFinalEmployeeID = findViewById(R.id.etEmployeeID);
         ETFinalEmployeeName = findViewById(R.id.etEmployeeName);
         ETFinalBorrowDate = findViewById(R.id.etBorrowDate);
         ETFinalReturnDate = findViewById(R.id.etReturnDate);
         ETFinalRemark = findViewById(R.id.etRemark);
+        ETFinalApprover = findViewById(R.id.etApprover);
         backButton = findViewById(R.id.btnBack);
         btnScan = findViewById(R.id.btnScan);
 
@@ -74,12 +79,14 @@ public class edit_details extends AppCompatActivity implements View.OnClickListe
         finalBorrowDate = i.getStringExtra("finalBorrowDate");
         finalReturnDate = i.getStringExtra("finalReturnDate");
         finalRemark = i.getStringExtra("finalRemark");
+        finalApprover = i.getStringExtra("finalApprover");
 
         ETFinalEmployeeID.setText(finalEmployeeID);
         ETFinalEmployeeName.setText(finalEmployeeName);
         ETFinalBorrowDate.setText(finalBorrowDate);
         ETFinalReturnDate.setText(finalReturnDate);
         ETFinalRemark.setText(finalRemark);
+        ETFinalApprover.setText(finalApprover);
 
         ETFinalBorrowDate.setInputType(InputType.TYPE_NULL);
         ETFinalBorrowDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -130,7 +137,7 @@ public class edit_details extends AppCompatActivity implements View.OnClickListe
         }
         else{
             ETFinalEmployeeID.setText("");
-            Toast.makeText(this, "No scan data received!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "No scan data received!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -179,6 +186,7 @@ public class edit_details extends AppCompatActivity implements View.OnClickListe
             String getBorrowDate = layout_borrowDate.getEditText().getText().toString().trim();
             String getReturnDate = layout_returnDate.getEditText().getText().toString().trim();
             String getRemarkEmployee = layout_remark.getEditText().getText().toString().trim();
+            String getApprover = layout_approver.getEditText().getText().toString().trim();
 
             if (getReturnDate.isEmpty()){
                 getReturnDate = null;
@@ -188,8 +196,12 @@ public class edit_details extends AppCompatActivity implements View.OnClickListe
                 getRemarkEmployee = null;
             }
 
+            if (getApprover.isEmpty()){
+                getApprover = null;
+            }
+
             Background bg = new Background();
-            bg.execute(getEmployeeID, getEmployeeName, getBorrowDate, getReturnDate, getRemarkEmployee, finalID);
+            bg.execute(getEmployeeID, getEmployeeName, getBorrowDate, getReturnDate, getRemarkEmployee, getApprover, finalID);
         }
     }
 
@@ -305,14 +317,15 @@ public class edit_details extends AppCompatActivity implements View.OnClickListe
                 return null;
             }
             try {
-                String query = "UPDATE borrow_list SET employee_id = ?, employee_name = ?, borrow_date = ?, return_date = ?, remark = ? WHERE id = ?";
+                String query = "UPDATE borrow_list SET employee_id = ?, employee_name = ?, borrow_date = ?, return_date = ?, remark = ?, approver = ? WHERE id = ?";
                 stmt = conn.prepareStatement(query);
-                stmt.setInt(1, Integer.parseInt(strings[0]));
+                stmt.setString(1, strings[0]);
                 stmt.setString(2, strings[1]);
                 stmt.setString(3, strings[2]);
                 stmt.setString(4, strings[3]);
                 stmt.setString(5, strings[4]);
-                stmt.setInt(6, Integer.parseInt(strings[5]));
+                stmt.setString(6, strings[5]);
+                stmt.setInt(7, Integer.parseInt(strings[6]));
                 stmt.executeUpdate();
             }
             catch (Exception e) {

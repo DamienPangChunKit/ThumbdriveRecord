@@ -15,6 +15,7 @@ public class NotificationHelper extends ContextWrapper {
 
     private NotificationManager mManager;
 
+    // check if the build version of phone is latest than this notification or not
     public NotificationHelper(Context base) {
         super(base);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -24,11 +25,12 @@ public class NotificationHelper extends ContextWrapper {
 
     @TargetApi(Build.VERSION_CODES.O)
     private void createChannel() {
-        NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_HIGH);
+        NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_HIGH); // Importance High means make sound and appear a head up notification
 
         getManager().createNotificationChannel(channel);
     }
 
+    // to retrieve a NotificationManager for informing the user of background events.
     public NotificationManager getManager() {
         if (mManager == null) {
             mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -37,6 +39,7 @@ public class NotificationHelper extends ContextWrapper {
         return mManager;
     }
 
+    // content of the notification
     public NotificationCompat.Builder getChannelNotification() {
         return new NotificationCompat.Builder(getApplicationContext(), channelID)
                 .setContentTitle("Alarm!")

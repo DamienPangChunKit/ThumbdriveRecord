@@ -27,7 +27,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/open_sans"
-        android:text="Thumbdrive"
+        android:text="Device"
         android:textColor="@android:color/background_light"
         android:textSize="30dp"
         android:textStyle="bold"
@@ -59,5 +59,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView"
         app:srcCompat="@drawable/ic_add" />
+
+    <ImageView
+        android:id="@+id/btnDeleteDevice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnAdd"
+        app:layout_constraintEnd_toStartOf="@+id/btnAdd"
+        app:layout_constraintTop_toTopOf="@+id/btnAdd"
+        app:srcCompat="@drawable/ic_delete_white" />
 
 </android.support.constraint.ConstraintLayout>
