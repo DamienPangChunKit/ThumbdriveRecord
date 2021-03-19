@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login"
+    tools:context="com.example.damien.devicerecord.expenses_details">
+
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintBottom_toBottomOf="@+id/tvExpenses"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvExpenses" />
+
+    <TextView
+        android:id="@+id/tvExpenses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/open_sans"
+        android:text="Service"
+        android:textColor="@android:color/background_light"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="100dp"
+        android:stretchColumns="2">
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text=" ID"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/tvExpensesServiceID"
+                android:text="ID "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text=" Year "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/tvExpensesServiceYear"
+                android:layout_width="0dp"
+                android:text="Year "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:lines="2"
+                android:inputType="textMultiLine"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text=" Month "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/tvExpensesServiceMonth"
+                android:layout_width="0dp"
+                android:text="Month "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:lines="2"
+                android:inputType="textMultiLine"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tvtvitem1"
+                android:layout_column="1"
+                android:text=" Item 1"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/tvExpensesItem1"
+                android:text="Item 1 "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tvtvitem2"
+                android:layout_column="1"
+                android:text=" Item 2 "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/tvExpensesItem2"
+                android:layout_width="0dp"
+                android:text="Item 2 "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:lines="2"
+                android:inputType="textMultiLine"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tvtvitem3"
+                android:layout_column="1"
+                android:text=" Item 3"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/tvExpensesItem3"
+                android:text="Item 3 "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tvtvOtherItem"
+                android:layout_column="1"
+                android:text=" Other Item "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/tvExpensesOtherItem"
+                android:text="Other Item "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text=" Total"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:lines="2"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/tvExpensesTotal"
+                android:layout_width="0dp"
+                android:text="Total "
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:lines="2"
+                android:inputType="textMultiLine"
+                android:background="@drawable/rectangle_border"
+                android:padding="3dip" />
+        </TableRow>
+
+    </TableLayout>
+
+    <ImageView
+        android:id="@+id/imgAddService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvExpenses"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvExpenses"
+        app:srcCompat="@drawable/ic_add" />
+
+    <Button
+        android:id="@+id/btnEditExpenses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/btn_common"
+        android:fontFamily="@font/merienda_one"
+        android:onClick="btnEditExpenses_onClicked"
+        android:text="Edit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
