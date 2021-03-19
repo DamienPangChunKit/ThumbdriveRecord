@@ -51,26 +51,26 @@
             android:name=".edit_details"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".manage_balance"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".balance_history"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".balance_final_history"
+            android:name=".expenses"
             android:screenOrientation="portrait" />
         <activity
             android:name=".add_list_next"
             android:screenOrientation="portrait" />
-
-        <receiver
-            android:name=".AlertReceiver"
-            android:screenOrientation="portrait" />
-
         <activity
             android:name=".add_device"
             android:screenOrientation="portrait" />
-        <activity android:name=".delete_device"></activity>
+        <activity
+            android:name=".delete_device"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".expenses_details"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".add_expenses"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".edit_expenses"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

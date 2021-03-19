@@ -1,11 +1,9 @@
 package com.example.damien.devicerecord;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.StrictMode;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -27,13 +25,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Calendar;
 
 public class add_list_next extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     TextInputLayout layout_remark;
     TextInputLayout layout_type;
-    TextInputLayout layout_approver;
+    TextInputLayout layout_issues;
     EditText ETRemark;
+    EditText ETIssues;
     ImageView backButton;
     Button btnScan;
     Spinner mSpinner;
@@ -43,6 +41,8 @@ public class add_list_next extends AppCompatActivity implements AdapterView.OnIt
     private String borrowDate;
     private String returnDate;
     private String device;
+    private String phoneName;
+    private String phoneModel;
     private int[] deviceID;
     private String[] deviceName;
 
@@ -53,8 +53,9 @@ public class add_list_next extends AppCompatActivity implements AdapterView.OnIt
 
         layout_remark = findViewById(R.id.textInputRemark);
         layout_type = findViewById(R.id.textInputDeviceType);
-        layout_approver = findViewById(R.id.textInputApprover);
+        layout_issues = findViewById(R.id.textInputIssues);
         ETRemark = findViewById(R.id.etRemark);
+        ETIssues = findViewById(R.id.etIssues);
         backButton = findViewById(R.id.btnBack);
         btnScan = findViewById(R.id.btnScan);
         mSpinner = findViewById(R.id.spinnerDeviceType);
@@ -65,6 +66,10 @@ public class add_list_next extends AppCompatActivity implements AdapterView.OnIt
         borrowDate = i.getStringExtra("borrowDateInput");
         returnDate = i.getStringExtra("returnDateInput");
         device = i.getStringExtra("deviceInput");
+
+        phoneName = Build.MANUFACTURER;
+        phoneModel = Build.MODEL;
+        insertIssues(phoneName, phoneModel);
 
         mSpinner.setOnItemSelectedListener(this);
         new Background(Background.FETCH_DEVICE).execute();
@@ -77,6 +82,12 @@ public class add_list_next extends AppCompatActivity implements AdapterView.OnIt
         });
 
         btnScan.setOnClickListener(this);
+    }
+
+    private void insertIssues(String phoneName, String phoneModel) {
+        if (phoneName.equals("HUAWEI") & phoneModel.equals("INE-LX2r")){
+            ETIssues.setText("Damien");
+        }
     }
 
     public void onClick(View v){
@@ -113,26 +124,26 @@ public class add_list_next extends AppCompatActivity implements AdapterView.OnIt
     public void btnAddList_onClicked(View view) {
         String remarkInput = layout_remark.getEditText().getText().toString().trim();
         String deviceTypeInput = mSpinner.getSelectedItem().toString().trim();
-        String approverInput = layout_approver.getEditText().getText().toString().trim();
+        String issuesInput = layout_issues.getEditText().getText().toString().trim();
 
         if (remarkInput.isEmpty()){
             remarkInput = null;
         }
 
-        if (approverInput.isEmpty()){
-            approverInput = null;
+        if (issuesInput.isEmpty()){
+            issuesInput = null;
         }
 
         Background bg = new Background(Background.INSERT_LIST);
-        bg.execute(employeeID, employeeName, borrowDate, returnDate, remarkInput, deviceTypeInput, device, approverInput);
+        bg.execute(employeeID, employeeName, borrowDate, returnDate, remarkInput, deviceTypeInput, device, issuesInput);
     }
 
     public class Background extends AsyncTask<String, Void, ResultSet> {
-        private static final String LIBRARY = "com.mysql.jdbc.Driver";
-        private static final String USERNAME = "sql12387699";
-        private static final String DB_NAME = "sql12387699";
-        private static final String PASSWORD = "UMmjeekHxr";
-        private static final String SERVER = "sql12.freemysqlhosting.net";
+        private final String LIBRARY = getString(R.string.db_library);
+        private final String USERNAME = getString(R.string.db_username);
+        private final String DB_NAME = getString(R.string.db_name);
+        private final String PASSWORD = getString(R.string.db_password);
+        private final String SERVER = getString(R.string.db_server);
 
         public static final int FETCH_DEVICE = 30;
         public static final int INSERT_LIST = 31;
@@ -212,7 +223,7 @@ public class add_list_next extends AppCompatActivity implements AdapterView.OnIt
                         return stmt.executeQuery();
 
                     case INSERT_LIST:
-                        query = "insert into borrow_list (employee_id, employee_name, borrow_date, return_date, remark, device_type, device, approver) values (?, ?, ?, ?, ?, ?, ?, ?)";
+                        query = "insert into borrow_list (employee_id, employee_name, borrow_date, return_date, remark, device_type, device, issues) values (?, ?, ?, ?, ?, ?, ?, ?)";
                         stmt = conn.prepareStatement(query);
                         stmt.setString(1, strings[0]);
                         stmt.setString(2, strings[1]);
@@ -262,12 +273,12 @@ public class add_list_next extends AppCompatActivity implements AdapterView.OnIt
         }
     }
 
-    // no need care because of failed
-    private void startAlarm(Calendar c) {
-        AlarmManager mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent i = new Intent(this, AlertReceiver.class);
-        PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, 1, i, 0);
-
-        mAlarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), mPendingIntent);
-    }
+    // no need care because of failed, but maybe can use next time (for send email reminder automatically)
+//    private void startAlarm(Calendar c) {
+//        AlarmManager mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//        Intent i = new Intent(this, AlertReceiver.class);
+//        PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, 1, i, 0);
+//
+//        mAlarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), mPendingIntent);
+//    }
 }

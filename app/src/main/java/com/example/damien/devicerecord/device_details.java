@@ -1,6 +1,7 @@
 package com.example.damien.devicerecord;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
@@ -22,6 +23,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 public class device_details extends AppCompatActivity {
@@ -80,11 +83,11 @@ public class device_details extends AppCompatActivity {
     }
 
     public class Background extends AsyncTask<String, Void, ResultSet> {
-        private static final String LIBRARY = "com.mysql.jdbc.Driver";
-        private static final String USERNAME = "sql12387699";
-        private static final String DB_NAME = "sql12387699";
-        private static final String PASSWORD = "UMmjeekHxr";
-        private static final String SERVER = "sql12.freemysqlhosting.net";
+        private final String LIBRARY = getString(R.string.db_library);
+        private final String USERNAME = getString(R.string.db_username);
+        private final String DB_NAME = getString(R.string.db_name);
+        private final String PASSWORD = getString(R.string.db_password);
+        private final String SERVER = getString(R.string.db_server);
 
         private Connection conn;
         private PreparedStatement stmt;
@@ -110,7 +113,7 @@ public class device_details extends AppCompatActivity {
                 String query;
                 switch(method){
                     case FETCH_DETAILS:
-                        query = "SELECT id, employee_id, employee_name, borrow_date, return_date, remark, approver FROM borrow_list WHERE (device_type = ? AND device = ?)";
+                        query = "SELECT id, employee_id, employee_name, borrow_date, return_date, remark, issues FROM borrow_list WHERE (device_type = ? AND device = ?)";
                         stmt = conn.prepareStatement(query);
                         stmt.setString(1, deviceName);
                         stmt.setString(2, device);
@@ -157,7 +160,7 @@ public class device_details extends AppCompatActivity {
         class deviceDetailsHolder extends RecyclerView.ViewHolder{
             TextView tvDeviceDetailsID;
             TextView tvDeviceDetailsName;
-            TextView tvDeviceDetailsDate;
+            TextView tvDeviceDetailsReturnDate;
             TableLayout mTableLayout;
 
             final deviceDetailsAdapter mAdapter;
@@ -166,7 +169,7 @@ public class device_details extends AppCompatActivity {
                 super(itemView);
                 tvDeviceDetailsID = (TextView) itemView.findViewById(R.id.tvDeviceDetailsID);
                 tvDeviceDetailsName = (TextView) itemView.findViewById(R.id.tvDeviceDetailsEmployeeName);
-                tvDeviceDetailsDate = (TextView) itemView.findViewById(R.id.tvDeviceDetailsDate);
+                tvDeviceDetailsReturnDate = (TextView) itemView.findViewById(R.id.tvDeviceDetailsReturnDate);
                 mTableLayout = (TableLayout) itemView.findViewById(R.id.device_details_layout_table);
 
                 this.mAdapter = adapter;
@@ -188,21 +191,18 @@ public class device_details extends AppCompatActivity {
                     result.next();
                 }
 
-//                if (result.next()){
-//                    mTableLayout.setVisibility(View.INVISIBLE);
-//                }
-
                 final String detailsID = result.getString(1);
                 final String detailsEmployeeID = result.getString(2);
                 final String detailsEmployeeName = result.getString(3);
                 final String detailsBorrowDate = result.getString(4);
                 final String detailsReturnDate = result.getString(5);
                 final String detailsRemark = result.getString(6);
-                final String detailsApprover = result.getString(7);
+                final String detailsIssues = result.getString(7);
 
                 deviceDetailsHolder.tvDeviceDetailsID.setText(detailsID);
                 deviceDetailsHolder.tvDeviceDetailsName.setText(detailsEmployeeName);
-                deviceDetailsHolder.tvDeviceDetailsDate.setText(detailsBorrowDate);
+                deviceDetailsHolder.tvDeviceDetailsReturnDate.setText(detailsReturnDate);
+                checkReturnDate(deviceDetailsHolder, detailsReturnDate);
 
                 deviceDetailsHolder.mTableLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -215,7 +215,7 @@ public class device_details extends AppCompatActivity {
                         i.putExtra("detailsReturnDate", detailsReturnDate);
                         i.putExtra("detailsRemark", detailsRemark);
                         i.putExtra("deviceName", deviceName);
-                        i.putExtra("detailsApprover", detailsApprover);
+                        i.putExtra("detailsIssues", detailsIssues);
                         startActivityForResult(i, REQUEST_CODE3);
                     }
                 });
@@ -253,6 +253,38 @@ public class device_details extends AppCompatActivity {
                 Log.e("ERROR EXECUTION", e.getMessage());
             } catch (InterruptedException e) {
                 Log.e("ERROR INTERRUPTED", e.getMessage());
+            }
+        }
+    }
+
+    private void checkReturnDate(@NonNull deviceDetailsAdapter.deviceDetailsHolder deviceDetailsHolder, String detailsReturnDate) {
+        ColorStateList oldColors =  deviceDetailsHolder.tvDeviceDetailsName.getTextColors(); //save original colors
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        Date today = calendar.getTime();
+
+        if (detailsReturnDate != null){
+            String[] splitDate = detailsReturnDate.split("-");
+            int year = Integer.parseInt(splitDate[0]);
+            int month = Integer.parseInt(splitDate[1]);
+            int day = Integer.parseInt(splitDate[2]);
+            // very weird bug on month (maybe it is my own problem)
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month - 1);
+            calendar.set(Calendar.DAY_OF_MONTH, day);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            Date checkReturnDate = calendar.getTime();
+
+            if (checkReturnDate.before(today) ){
+                deviceDetailsHolder.tvDeviceDetailsReturnDate.setTextColor(getResources().getColor(R.color.colorRed));
+            } else {
+                deviceDetailsHolder.tvDeviceDetailsReturnDate.setTextColor(oldColors);
             }
         }
     }

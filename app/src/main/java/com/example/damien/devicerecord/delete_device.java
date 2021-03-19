@@ -20,7 +20,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.concurrent.ExecutionException;
 
 public class delete_device extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     ImageView backButton;
@@ -85,11 +84,11 @@ public class delete_device extends AppCompatActivity implements AdapterView.OnIt
     }
 
     public class Background extends AsyncTask<String, Void, ResultSet> {
-        private static final String LIBRARY = "com.mysql.jdbc.Driver";
-        private static final String USERNAME = "sql12387699";
-        private static final String DB_NAME = "sql12387699";
-        private static final String PASSWORD = "UMmjeekHxr";
-        private static final String SERVER = "sql12.freemysqlhosting.net";
+        private final String LIBRARY = getString(R.string.db_library);
+        private final String USERNAME = getString(R.string.db_username);
+        private final String DB_NAME = getString(R.string.db_name);
+        private final String PASSWORD = getString(R.string.db_password);
+        private final String SERVER = getString(R.string.db_server);
 
         public static final int FETCH_DEVICE = 300;
         public static final int DELETE_DEVICE = 400;

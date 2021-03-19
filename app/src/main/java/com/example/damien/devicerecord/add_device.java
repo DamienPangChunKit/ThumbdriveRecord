@@ -184,11 +184,11 @@ public class add_device extends AppCompatActivity {
     }
 
     public class Background extends AsyncTask<String, Void, ResultSet> {
-        private static final String LIBRARY = "com.mysql.jdbc.Driver";
-        private static final String USERNAME = "sql12387699";
-        private static final String DB_NAME = "sql12387699";
-        private static final String PASSWORD = "UMmjeekHxr";
-        private static final String SERVER = "sql12.freemysqlhosting.net";
+        private final String LIBRARY = getString(R.string.db_library);
+        private final String USERNAME = getString(R.string.db_username);
+        private final String DB_NAME = getString(R.string.db_name);
+        private final String PASSWORD = getString(R.string.db_password);
+        private final String SERVER = getString(R.string.db_server);
 
         private Connection conn;
         private PreparedStatement stmt, stmt2;
@@ -250,7 +250,6 @@ public class add_device extends AppCompatActivity {
                 stmt.setString(1, strings[0]);
                 stmt.setString(2, strings[0]);
 
-//                String query2 = "INSERT into device_type (device, name, remark, image_uri) values (?, ?, ?, ?)";
                 String query2 = "INSERT into device_type (device, name, remark, image_uri) " +
                                 "SELECT ?, ?, ?, ? " +
                                 "FROM DUAL " +

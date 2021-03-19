@@ -27,9 +27,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class add_list extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     TextInputLayout layout_employeeID;
@@ -66,6 +68,19 @@ public class add_list extends AppCompatActivity implements AdapterView.OnItemSel
 
         mSpinner.setOnItemSelectedListener(this);
         new Background(Background.FETCH_DEVICE).execute();
+
+        Calendar calendar = Calendar.getInstance();
+        Date today = calendar.getTime();
+
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        Date tomorrow = calendar.getTime();
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String todayDate = dateFormat.format(today);
+        String tomorrowDate = dateFormat.format(tomorrow);
+
+        ETFinalBorrowDate.setText("" + todayDate);
+        ETFinalReturnDate.setText("" + tomorrowDate);
 
         ETFinalBorrowDate.setInputType(InputType.TYPE_NULL);
         ETFinalBorrowDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -261,11 +276,11 @@ public class add_list extends AppCompatActivity implements AdapterView.OnItemSel
     }
 
     public class Background extends AsyncTask<String, Void, ResultSet> {
-        private static final String LIBRARY = "com.mysql.jdbc.Driver";
-        private static final String USERNAME = "sql12387699";
-        private static final String DB_NAME = "sql12387699";
-        private static final String PASSWORD = "UMmjeekHxr";
-        private static final String SERVER = "sql12.freemysqlhosting.net";
+        private final String LIBRARY = getString(R.string.db_library);
+        private final String USERNAME = getString(R.string.db_username);
+        private final String DB_NAME = getString(R.string.db_name);
+        private final String PASSWORD = getString(R.string.db_password);
+        private final String SERVER = getString(R.string.db_server);
 
         public static final int FETCH_DEVICE = 30;
 

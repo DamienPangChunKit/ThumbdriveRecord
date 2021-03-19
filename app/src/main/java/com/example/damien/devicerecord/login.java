@@ -20,7 +20,6 @@ public class login extends AppCompatActivity {
     public static final String EXTRA_ID = "com.example.damien.thumbdriverecord.ID";
     public static final String EXTRA_USERNAME = "com.example.damien.thumbdriverecord.USERNAME";
     public static final String EXTRA_PASSWORD = "com.example.damien.thumbdriverecord.PASSWORD";
-    public static final String EXTRA_BALANCE = "com.example.damien.thumbdriverecord.BALANCE";
 
     private TextInputLayout textInputUsername;
     private TextInputLayout textInputPassword;
@@ -80,11 +79,11 @@ public class login extends AppCompatActivity {
     }
 
     public class Background extends AsyncTask<String, Void, ResultSet> {
-        private static final String LIBRARY = "com.mysql.jdbc.Driver";
-        private static final String USERNAME = "sql12387699";
-        private static final String DB_NAME = "sql12387699";
-        private static final String PASSWORD = "UMmjeekHxr";
-        private static final String SERVER = "sql12.freemysqlhosting.net";
+        private final String LIBRARY = getString(R.string.db_library);
+        private final String USERNAME = getString(R.string.db_username);
+        private final String DB_NAME = getString(R.string.db_name);
+        private final String PASSWORD = getString(R.string.db_password);
+        private final String SERVER = getString(R.string.db_server);
 
         private Connection conn;
         private PreparedStatement stmt;
@@ -99,14 +98,12 @@ public class login extends AppCompatActivity {
         protected void onPostExecute(ResultSet result) {
             super.onPostExecute(result);
             Intent i = new Intent(login.this, homepage.class);
-            String passwordInput = textInputPassword.getEditText().getText().toString().trim();
 
             try {
                 if (result.next()) {
                     i.putExtra(EXTRA_ID, result.getInt(1));
                     i.putExtra(EXTRA_USERNAME, result.getString(2));
                     i.putExtra(EXTRA_PASSWORD, result.getString(3));
-                    i.putExtra(EXTRA_BALANCE, result.getFloat(4));
                     startActivity(i);
                 }
                 else {
@@ -141,7 +138,7 @@ public class login extends AppCompatActivity {
                 return null;
             }
             try {
-                String query = "SELECT id, username, password, balance FROM account WHERE username LIKE ? AND password=?";
+                String query = "SELECT id, username, password FROM account WHERE username LIKE ? AND password=?";
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1, strings[0]);
                 stmt.setString(2, strings[1]);

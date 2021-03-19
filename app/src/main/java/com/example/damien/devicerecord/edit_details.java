@@ -34,13 +34,13 @@ public class edit_details extends AppCompatActivity implements View.OnClickListe
     TextInputLayout layout_borrowDate;
     TextInputLayout layout_returnDate;
     TextInputLayout layout_remark;
-    TextInputLayout layout_approver;
+    TextInputLayout layout_issues;
     EditText ETFinalEmployeeID;
     EditText ETFinalEmployeeName;
     EditText ETFinalBorrowDate;
     EditText ETFinalReturnDate;
     EditText ETFinalRemark;
-    EditText ETFinalApprover;
+    EditText ETFinalIssues;
     ImageView backButton;
     Button btnScan;
 
@@ -50,7 +50,7 @@ public class edit_details extends AppCompatActivity implements View.OnClickListe
     private String finalBorrowDate;
     private String finalReturnDate;
     private String finalRemark;
-    private String finalApprover;
+    private String finalIssues;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +62,13 @@ public class edit_details extends AppCompatActivity implements View.OnClickListe
         layout_borrowDate = findViewById(R.id.textInputBorrowDate);
         layout_returnDate = findViewById(R.id.textInputReturnDate);
         layout_remark = findViewById(R.id.textInputRemark);
-        layout_approver = findViewById(R.id.textInputApprover);
+        layout_issues = findViewById(R.id.textInputIssues);
         ETFinalEmployeeID = findViewById(R.id.etEmployeeID);
         ETFinalEmployeeName = findViewById(R.id.etEmployeeName);
         ETFinalBorrowDate = findViewById(R.id.etBorrowDate);
         ETFinalReturnDate = findViewById(R.id.etReturnDate);
         ETFinalRemark = findViewById(R.id.etRemark);
-        ETFinalApprover = findViewById(R.id.etApprover);
+        ETFinalIssues = findViewById(R.id.etIssues);
         backButton = findViewById(R.id.btnBack);
         btnScan = findViewById(R.id.btnScan);
 
@@ -79,14 +79,14 @@ public class edit_details extends AppCompatActivity implements View.OnClickListe
         finalBorrowDate = i.getStringExtra("finalBorrowDate");
         finalReturnDate = i.getStringExtra("finalReturnDate");
         finalRemark = i.getStringExtra("finalRemark");
-        finalApprover = i.getStringExtra("finalApprover");
+        finalIssues = i.getStringExtra("finalIssues");
 
         ETFinalEmployeeID.setText(finalEmployeeID);
         ETFinalEmployeeName.setText(finalEmployeeName);
         ETFinalBorrowDate.setText(finalBorrowDate);
         ETFinalReturnDate.setText(finalReturnDate);
         ETFinalRemark.setText(finalRemark);
-        ETFinalApprover.setText(finalApprover);
+        ETFinalIssues.setText(finalIssues);
 
         ETFinalBorrowDate.setInputType(InputType.TYPE_NULL);
         ETFinalBorrowDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -186,7 +186,7 @@ public class edit_details extends AppCompatActivity implements View.OnClickListe
             String getBorrowDate = layout_borrowDate.getEditText().getText().toString().trim();
             String getReturnDate = layout_returnDate.getEditText().getText().toString().trim();
             String getRemarkEmployee = layout_remark.getEditText().getText().toString().trim();
-            String getApprover = layout_approver.getEditText().getText().toString().trim();
+            String getIssues = layout_issues.getEditText().getText().toString().trim();
 
             if (getReturnDate.isEmpty()){
                 getReturnDate = null;
@@ -196,12 +196,12 @@ public class edit_details extends AppCompatActivity implements View.OnClickListe
                 getRemarkEmployee = null;
             }
 
-            if (getApprover.isEmpty()){
-                getApprover = null;
+            if (getIssues.isEmpty()){
+                getIssues = null;
             }
 
             Background bg = new Background();
-            bg.execute(getEmployeeID, getEmployeeName, getBorrowDate, getReturnDate, getRemarkEmployee, getApprover, finalID);
+            bg.execute(getEmployeeID, getEmployeeName, getBorrowDate, getReturnDate, getRemarkEmployee, getIssues, finalID);
         }
     }
 
@@ -264,11 +264,11 @@ public class edit_details extends AppCompatActivity implements View.OnClickListe
     }
 
     public class Background extends AsyncTask<String, Void, ResultSet> {
-        private static final String LIBRARY = "com.mysql.jdbc.Driver";
-        private static final String USERNAME = "sql12387699";
-        private static final String DB_NAME = "sql12387699";
-        private static final String PASSWORD = "UMmjeekHxr";
-        private static final String SERVER = "sql12.freemysqlhosting.net";
+        private final String LIBRARY = getString(R.string.db_library);
+        private final String USERNAME = getString(R.string.db_username);
+        private final String DB_NAME = getString(R.string.db_name);
+        private final String PASSWORD = getString(R.string.db_password);
+        private final String SERVER = getString(R.string.db_server);
 
         private Connection conn;
         private PreparedStatement stmt;
@@ -305,7 +305,7 @@ public class edit_details extends AppCompatActivity implements View.OnClickListe
             progressDialog = new ProgressDialog(edit_details.this);
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.setMessage("Processing data");
-            progressDialog.show();
+//            progressDialog.show();
         }
 
         @Override
@@ -317,7 +317,7 @@ public class edit_details extends AppCompatActivity implements View.OnClickListe
                 return null;
             }
             try {
-                String query = "UPDATE borrow_list SET employee_id = ?, employee_name = ?, borrow_date = ?, return_date = ?, remark = ?, approver = ? WHERE id = ?";
+                String query = "UPDATE borrow_list SET employee_id = ?, employee_name = ?, borrow_date = ?, return_date = ?, remark = ?, issues = ? WHERE id = ?";
                 stmt = conn.prepareStatement(query);
                 stmt.setString(1, strings[0]);
                 stmt.setString(2, strings[1]);

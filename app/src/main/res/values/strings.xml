@@ -3,4 +3,9 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="username_exists">Username has been used!</string>
+    <string name="db_library">com.mysql.jdbc.Driver</string>
+    <string name="db_username">sql12387699</string>
+    <string name="db_name">sql12387699</string>
+    <string name="db_password">UMmjeekHxr</string>
+    <string name="db_server">sql12.freemysqlhosting.net</string>
 </resources>
